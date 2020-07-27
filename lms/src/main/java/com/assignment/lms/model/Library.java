@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 @Entity
 public class Library {
@@ -25,7 +23,6 @@ public class Library {
 	
 	private String address;
     
-	@JsonIgnore
     @OneToMany(mappedBy = "library", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Book> books;
 
