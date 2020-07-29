@@ -24,7 +24,6 @@ public class ObjectMapper {
 		return modelMapper.map(input, targetClass);
 	}
 	
-	
 	public <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
 	    return source
 	      .parallelStream()

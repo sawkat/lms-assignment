@@ -1,4 +1,4 @@
-package com.assignment.lms.unittests.service;
+package com.assignment.lms.service;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,9 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -25,9 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+
 
 import com.assignment.lms.dto.BookDTO;
 import com.assignment.lms.dto.LibraryDTO;
@@ -36,7 +32,7 @@ import com.assignment.lms.model.Book;
 import com.assignment.lms.model.Library;
 import com.assignment.lms.repository.BookRepository;
 import com.assignment.lms.repository.LibraryRepository;
-import com.assignment.lms.service.BookService;
+import com.assignment.lms.service.Impl.BookServiceImpl;
 import com.assignment.lms.utils.ObjectMapper;
 
 @ExtendWith(MockitoExtension.class)
@@ -53,10 +49,8 @@ public class BookServiceUnitTest {
 	ObjectMapper objectMapper;
 	
 	@InjectMocks
-	private BookService bookService;
-	
+	private BookServiceImpl bookService;
 
-	
 	private static BookDTO bookDTO;
 
 	private static LibraryDTO libraryDTO;
@@ -66,6 +60,7 @@ public class BookServiceUnitTest {
 	private static Book book;
 	
 	private static List<Book> listOfBook;
+	
 	private static List<BookDTO> listOfBookDTO;
 	
 	@BeforeAll

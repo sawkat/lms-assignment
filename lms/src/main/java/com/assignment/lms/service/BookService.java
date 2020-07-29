@@ -32,6 +32,13 @@ public interface BookService {
 	BookDTO updateBook(BookDTO bookDTO);
 	
 	/**
+	 * Method to delete a book
+	 * 
+	 * @param bookId
+	 */
+	void deleteBook(long bookId);
+	
+	/**
 	 * Method to get a book by bookId
 	 * 
 	 * @param bookId

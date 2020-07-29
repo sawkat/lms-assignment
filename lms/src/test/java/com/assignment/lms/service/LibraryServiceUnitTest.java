@@ -1,4 +1,4 @@
-package com.assignment.lms.unittests.service;
+package com.assignment.lms.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.assignment.lms.dto.LibraryDTO;
 import com.assignment.lms.model.Library;
 import com.assignment.lms.repository.LibraryRepository;
-import com.assignment.lms.service.LibraryService;
+import com.assignment.lms.service.Impl.LibraryServiceImpl;
 import com.assignment.lms.utils.ObjectMapper;
 
 @RunWith(JUnitPlatform.class)
@@ -31,7 +31,7 @@ public class LibraryServiceUnitTest {
 	ObjectMapper objectMapper;
 	
 	@InjectMocks 
-	private LibraryService libraryService;
+	private LibraryServiceImpl libraryService;
 	
 	LibraryDTO libraryDTO = new LibraryDTO();
 	Library library = new Library();

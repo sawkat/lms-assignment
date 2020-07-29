@@ -36,7 +36,6 @@ public class BookServiceImpl implements BookService{
 	@Autowired
     private ObjectMapper objectMapper;
 	
-
 	@Override
 	public BookDTO addBookToLibrary(long libraryId, BookDTO bookDTO){
 		Optional<Library> optLibrary = libraryRepository.findById(libraryId);
@@ -48,7 +47,6 @@ public class BookServiceImpl implements BookService{
 			throw new ResourceNotFoundException("Library not found with id " + libraryId);
 		}
 	}
-	
 
 	@Override
 	public BookDTO updateBook(BookDTO bookDTO){
@@ -59,6 +57,16 @@ public class BookServiceImpl implements BookService{
 			Book updatedBook = objectMapper.map(bookDTO, Book.class);
 			updatedBook.setLibrary(optBook.get().getLibrary());
 			return objectMapper.map(bookRepository.save(updatedBook),BookDTO.class);
+		}else {
+			throw new ResourceNotFoundException("Book not found with id " + bookId);
+		}
+	}
+	
+	@Override
+	public void deleteBook(long bookId) {
+		Optional<Book> optBook = bookRepository.findById(bookId);
+		if (optBook.isPresent()){
+			bookRepository.deleteById(bookId);
 		}else {
 			throw new ResourceNotFoundException("Book not found with id " + bookId);
 		}

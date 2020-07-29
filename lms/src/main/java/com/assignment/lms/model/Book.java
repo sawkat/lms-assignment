@@ -23,7 +23,6 @@ public class Book {
     @ManyToOne
     private Library library;
 
-
     public Book() {
     
     }

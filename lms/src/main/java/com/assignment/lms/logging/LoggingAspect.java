@@ -56,7 +56,6 @@ public class LoggingAspect {
         	String methodName = methodSignature.getName();
         	
         	LOGGER.info("Got Exception - " + className + "." + methodName +" Exception Details - "+exp.getMessage());
-
         }
 
 }

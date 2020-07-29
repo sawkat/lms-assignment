@@ -22,7 +22,6 @@ public class LmsGlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(errorResponse, HttpStatus.NOT_FOUND);
     }
 	
-	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
