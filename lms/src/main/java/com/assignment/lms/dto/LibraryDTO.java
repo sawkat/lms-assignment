@@ -12,6 +12,7 @@ public class LibraryDTO {
     private String name;
 	
 	private String address;
+	
 
 	public Long getId() {
 		return id;
@@ -36,7 +37,5 @@ public class LibraryDTO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	
     
 }

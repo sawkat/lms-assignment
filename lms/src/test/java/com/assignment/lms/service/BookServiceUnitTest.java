@@ -65,34 +65,14 @@ public class BookServiceUnitTest {
 	
 	@BeforeAll
 	public static void init() {
-		libraryDTO = new LibraryDTO();
-		libraryDTO.setId(1l);
-		libraryDTO.setName("CCU Library");
-		libraryDTO.setAddress("Kolkata");
-		
-		bookDTO = new BookDTO();
-		bookDTO.setId(2l);
-		bookDTO.setTitle("Java 8");
-		bookDTO.setNoOfPages(400);
-		bookDTO.setAuthorName("Author Name");
-		
-		library = new Library();
-		library.setId(1l);
-		library.setName("CCU Library");
-		library.setAddress("Kolkata");
-		
-		book = new Book();
-		book.setId(2l);
-		book.setTitle("Java 8");
-		book.setNoOfPages(400);
-		book.setAuthorName("Author Name");
-		
+		createLibraryDTO();
+		createBookDTO();
+		createLibrary();
+		createBook();
 		listOfBook = new ArrayList<Book>();
 		listOfBook.add(book);
-		
 		listOfBookDTO = new ArrayList<BookDTO>();
 		listOfBookDTO.add(bookDTO);
-
 	}
 	
 	@Test
@@ -189,5 +169,34 @@ public class BookServiceUnitTest {
 		assertTrue(bookService.getAllByLibrary(1l).size() == 1);
 	}
 	
+	private static void createLibraryDTO() {
+		libraryDTO = new LibraryDTO();
+		libraryDTO.setId(1l);
+		libraryDTO.setName("CCU Library");
+		libraryDTO.setAddress("Kolkata");
+	}
+	
+	private static void createLibrary() {
+		library = new Library();
+		library.setId(1l);
+		library.setName("CCU Library");
+		library.setAddress("Kolkata");
+	}
+	
+	private static void createBookDTO() {
+		bookDTO = new BookDTO();
+		bookDTO.setId(2l);
+		bookDTO.setTitle("Java 8");
+		bookDTO.setNoOfPages(400);
+		bookDTO.setAuthorName("Author Name");
+	}
+	
+	private static void createBook() {
+		book = new Book();
+		book.setId(2l);
+		book.setTitle("Java 8");
+		book.setNoOfPages(400);
+		book.setAuthorName("Author Name");
+	}
 	
 }

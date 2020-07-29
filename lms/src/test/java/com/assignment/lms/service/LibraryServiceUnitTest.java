@@ -33,18 +33,18 @@ public class LibraryServiceUnitTest {
 	@InjectMocks 
 	private LibraryServiceImpl libraryService;
 	
-	LibraryDTO libraryDTO = new LibraryDTO();
-	Library library = new Library();
+	Library library;
+	
+	LibraryDTO libraryDTO;
 	
 	@BeforeEach
 	void setMockOutput() {
-		
+		library = new Library();
 		library.setName("CCU Library");
 		library.setAddress("Kolkata");
-		
+		libraryDTO = new LibraryDTO();
 		libraryDTO.setName("CCU Library");
 		libraryDTO.setAddress("Kolkata");
-		
 		when(objectMapper.map(libraryDTO,Library.class)).thenReturn(library);
 		when(objectMapper.map(library,LibraryDTO.class)).thenReturn(libraryDTO);
 		when(libraryRepository.save(any(Library.class))).thenReturn(library);

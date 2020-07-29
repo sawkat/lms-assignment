@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
@@ -119,8 +120,8 @@ public class LmsIntegrationTests {
 		bookDTO.setId(bookId);
 		bookDTO.setTitle(bookTitle);
 		bookDTO.setAuthorName(bookAuthorNameUpdated);
-		ResponseEntity<BookDTO> responseEntity = this.restTemplate
-				.postForEntity(createBookEndpoint("update"), bookDTO, BookDTO.class);
+		ResponseEntity<BookDTO> responseEntity = this.restTemplate.exchange(createBookEndpoint("update"), HttpMethod.PUT, new HttpEntity<>(bookDTO),
+				new ParameterizedTypeReference<BookDTO>() {  });	
 		assertEquals(200, responseEntity.getStatusCodeValue());
 		assertEquals(bookTitle, responseEntity.getBody().getTitle());
 		assertEquals(bookAuthorNameUpdated, responseEntity.getBody().getAuthorName());
@@ -134,8 +135,8 @@ public class LmsIntegrationTests {
 		bookDTO.setId(bookId + 1);
 		bookDTO.setTitle(bookTitle);
 		bookDTO.setAuthorName(bookAuthorNameUpdated);
-		ResponseEntity<BookDTO> responseEntity = this.restTemplate
-				.postForEntity(createBookEndpoint("update"), bookDTO, BookDTO.class);
+		ResponseEntity<BookDTO> responseEntity = this.restTemplate.exchange(createBookEndpoint("update"), HttpMethod.PUT, new HttpEntity<>(bookDTO),
+				new ParameterizedTypeReference<BookDTO>() {  });	
 		assertEquals(404, responseEntity.getStatusCodeValue());
 	}
 	
@@ -147,8 +148,8 @@ public class LmsIntegrationTests {
 		bookDTO.setId(null);
 		bookDTO.setTitle(bookTitle);
 		bookDTO.setAuthorName(bookAuthorNameUpdated);
-		ResponseEntity<BookDTO> responseEntity = this.restTemplate
-				.postForEntity(createBookEndpoint("update"), bookDTO, BookDTO.class);
+		ResponseEntity<BookDTO> responseEntity = this.restTemplate.exchange(createBookEndpoint("update"), HttpMethod.PUT, new HttpEntity<>(bookDTO),
+				new ParameterizedTypeReference<BookDTO>() {  });	
 		assertEquals(404, responseEntity.getStatusCodeValue());
 	}
 	
@@ -174,6 +175,18 @@ public class LmsIntegrationTests {
 		assertEquals(200, responseEntity.getStatusCodeValue());
 		assertTrue(responseEntity.getBody().size() == 1);
 	}
+	
+	@Test
+	@Order(11)
+	@DisplayName("Test Delete Book")
+	public void testDeleteBook() {	
+		ResponseEntity<List<BookDTO>> responseEntity = this.restTemplate
+				.exchange(createBookEndpoint("delete") +"/"+ bookId, HttpMethod.DELETE, null,
+						new ParameterizedTypeReference<List<BookDTO>>() {
+	            });
+		assertEquals(200, responseEntity.getStatusCodeValue());
+	}
+	
 	
 	private String createLibraryEndpoint(String uri) {
 		return "http://localhost:" + port +"/library/"+ uri;
