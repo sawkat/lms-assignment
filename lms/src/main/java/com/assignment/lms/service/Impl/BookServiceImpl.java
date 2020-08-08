@@ -1,10 +1,11 @@
 package com.assignment.lms.service.Impl;
 
 import java.util.List;
-import java.util.Optional;
 
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.assignment.lms.dto.BookDTO;
@@ -26,6 +27,15 @@ import com.assignment.lms.utils.ObjectMapper;
  */
 @Service
 public class BookServiceImpl implements BookService{
+	
+	@Value("${lms.msg.library_not_found_with_id}")
+	private String msgLibraryNotFound;
+	
+	@Value("${lms.msg.book_not_found_with_id}")
+	private String msgBookNotFound;
+	
+	@Value("${lms.msg.book_id_can_not_null}")
+	private String msgBookCanNotNull;
 
 	@Autowired
 	private BookRepository bookRepository;
@@ -37,49 +47,36 @@ public class BookServiceImpl implements BookService{
     private ObjectMapper objectMapper;
 	
 	@Override
+	@Transactional
 	public BookDTO addBookToLibrary(long libraryId, BookDTO bookDTO){
-		Optional<Library> optLibrary = libraryRepository.findById(libraryId);
-		if (optLibrary.isPresent()){
-			Book book = objectMapper.map(bookDTO, Book.class);
-			book.setLibrary(optLibrary.get());
-			return objectMapper.map(bookRepository.save(book), BookDTO.class);
-		}else {
-			throw new ResourceNotFoundException("Library not found with id " + libraryId);
-		}
+		Library library = libraryRepository.findById(libraryId).orElseThrow(() -> new ResourceNotFoundException(msgLibraryNotFound + libraryId));
+		Book book = objectMapper.map(bookDTO, Book.class);
+		book.setLibrary(library);
+		return objectMapper.map(bookRepository.save(book), BookDTO.class);	
 	}
 
 	@Override
+	@Transactional
 	public BookDTO updateBook(BookDTO bookDTO){
 		Long bookId = bookDTO.getId();
-		if(bookId == null)  throw new ResourceNotFoundException("Book id can not null.");
-		Optional<Book> optBook = bookRepository.findById(bookId);
-		if (optBook.isPresent()){
-			Book updatedBook = objectMapper.map(bookDTO, Book.class);
-			updatedBook.setLibrary(optBook.get().getLibrary());
-			return objectMapper.map(bookRepository.save(updatedBook),BookDTO.class);
-		}else {
-			throw new ResourceNotFoundException("Book not found with id " + bookId);
-		}
+		if(bookId == null)  throw new ResourceNotFoundException(msgBookCanNotNull);
+		Book bookInDB = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException(msgBookNotFound + bookId));
+		Book updatedBook = objectMapper.map(bookDTO, Book.class);
+		updatedBook.setLibrary(bookInDB.getLibrary());
+		return objectMapper.map(bookRepository.save(updatedBook),BookDTO.class);	
 	}
 	
 	@Override
+	@Transactional
 	public void deleteBook(long bookId) {
-		Optional<Book> optBook = bookRepository.findById(bookId);
-		if (optBook.isPresent()){
-			bookRepository.deleteById(bookId);
-		}else {
-			throw new ResourceNotFoundException("Book not found with id " + bookId);
-		}
+		bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException(msgBookNotFound + bookId));
+		bookRepository.deleteById(bookId);
 	}
 	
 	@Override
 	public BookDTO getBookById(Long bookId){
-		Optional<Book> optBook = bookRepository.findById(bookId);
-		if (optBook.isPresent()){
-			return objectMapper.map(optBook.get(), BookDTO.class);
-		}else {
-			throw new ResourceNotFoundException("Book not found with id " + bookId);
-		}
+		Book book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException(msgBookNotFound + bookId));
+		return objectMapper.map(book, BookDTO.class);
 	}
 	
 	@Override
