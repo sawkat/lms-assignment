@@ -13,8 +13,7 @@ import com.assignment.lms.dto.LibraryDTO;
  *
  */
 public interface LibraryService {
-	
-	
+		
 	/**
 	 * Method to create library
 	 * 

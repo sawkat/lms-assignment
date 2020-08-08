@@ -28,7 +28,6 @@ public class LibraryServiceImpl implements LibraryService{
 	@Value("${lms.msg.library_not_found_with_id}")
 	private String msgLibraryNotFound;
 	
-	
 	@Autowired
 	private LibraryRepository libraryRepository;
 	
